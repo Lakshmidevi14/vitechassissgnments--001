@@ -1,0 +1,56 @@
+create or replace table orders(order_id int,
+                               order_amount int)
+insert into orders(order_id,order_amount) 
+             values(1,2000),
+                   (2,-20),
+                   (3,300),
+                   (4,3000),
+                   (5,-200)
+select*from orders
+
+
+select order_id,
+       order_amount,
+case
+    when order_amount>1 then 'profit' else 'loss'
+end as profit_loss
+from orders
+
+create or replace table days(number int)
+
+insert into days(number)
+ values(1),
+       (2),
+       (3),
+       (4),
+       (5),
+       (6),
+       (7),
+       (8),
+       (9),
+       (10)
+ select*from days                 
+
+ select number,
+        case when number=1 then 'sunday' 
+        
+        when number=2 then 'monday'
+        when number=3 then 'tuesday' 
+        when number=4 then 'wednesday' 
+        when number=5 then 'thursday' 
+        when number=6 then 'friday' 
+        when number=7 then 'saturday'
+        else 'null'
+        end as day_name from days;
+ 
+with cte_emp as(       
+select employee_id,
+       first_name,
+       salary  ,
+      department_id,
+         dense_rank over (order by salary  ) as dense_rank
+       from employees
+)select*from cte_emp where dense_rank=1
+         
+    select salary,count(department_id) from employees group by salary
+                                      order by count(department_id) desc
